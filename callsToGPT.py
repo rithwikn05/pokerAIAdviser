@@ -5,13 +5,15 @@ class Implementation:
         self.system_input = '''You are an expert in texas hold'em. Given a certain poker hand and
         context of the game, you are to give a recommended move and advise the player on possible considerations'''
 
-    def generate(self):
+    def generate(self, prompt):
+        self.prompt_field = prompt
         my_prompt = self.prompt_field.name
+        print(my_prompt)
         api_key = ""
         url = "https://api.openai.com/v1/chat/completions"
         headers = {"Authorization":f"Bearer {api_key}"}
         parameters = {
-            "model": "gpt-4o",
+            "model": "gpt-4-o",
             "messages": [
                 {"role": "system", "content": self.system_input},
                 {"role": "user", "content": my_prompt}
@@ -22,3 +24,5 @@ class Implementation:
         if response.status_code == 200:
             generated_text = response_data["choices"][0]["messages"]["content"]
             self.output_label = generated_text
+        else:
+            print("Error")
