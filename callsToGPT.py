@@ -1,8 +1,10 @@
 from openai import OpenAI 
-from flask import Flask, jsonify
+from flask import Flask, request
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app) 
 
 class Implementation:
     
@@ -23,9 +25,6 @@ class Implementation:
         After writing each task, always start writing the next task in a new line and number each task in the beginning of the line.
         '''
 
-
-    def sayHi(self):
-        print("hii")
     
     def generate(self, prompt):
 
@@ -37,8 +36,6 @@ class Implementation:
         
         self.prompt_field = prompt
         api_key = password
-        url = "https://api.openai.com/v1/chat/completions"
-        headers = {"Authorization": f"Bearer {api_key}"}
         completion = client.chat.completions.create(
             model=MODEL,
             messages = [
@@ -46,7 +43,6 @@ class Implementation:
                 {"role": "user", "content": self.prompt_field}
             ],
         )
-        #response = requests.post(url, headers=headers, json=parameters)
         
         return completion.choices[0].message.content
 
@@ -57,7 +53,9 @@ impl = Implementation()
 
 @app.route('/generate', methods = ['POST'])
 def generateOutput():
-    data = request.get_json()
-    prompt = data.get('prompt')
+    prompt = request.data.decode('utf-8')
     output = impl.generate(prompt)
-    return jsonify({'output': output})
+    return output, 200, {'Content-Type': 'text/plain'}
+
+if __name__ == "__main__":
+    app.run()

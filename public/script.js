@@ -4,14 +4,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     inputText.addEventListener('input', async (event) => {
         const userInput = event.target.value;
-        const response = await fetch('/generate', {
+        const response = await fetch('http://127.0.0.1:5000/generate', {
             method: 'POST',
             headers: {
-                'Content-Tpye': 'application/json'
+                'Content-Tpye': 'text/plain'
             },
-            body: JSON.stringify({prompt: userInput})
+            body: userInput
         });
-        const data = await response.json();
-        output.textContent = data.output || 'Your analysis will appear here.';
+        if (response.ok) {
+            const data = await response.text();
+            output.textContent = data || 'hello.';
+        } else {
+            output.textContent = 'An error occurred.';
+        }
     });
 });
