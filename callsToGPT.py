@@ -1,5 +1,8 @@
 from openai import OpenAI 
+from flask import Flask, jsonify
 import os
+
+app = Flask(__name__)
 
 class Implementation:
     
@@ -49,3 +52,12 @@ class Implementation:
 
     def run(self, userInput):
         return self.generate(userInput)
+
+impl = Implementation()
+
+@app.route('/generate', methods = ['POST'])
+def generateOutput():
+    data = request.get_json()
+    prompt = data.get('prompt')
+    output = impl.generate(prompt)
+    return jsonify({'output': output})
