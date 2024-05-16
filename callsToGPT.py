@@ -45,7 +45,7 @@ class Implementation:
         )
         #response = requests.post(url, headers=headers, json=parameters)
         
-        print(completion.choices[0].message.content)
+        return completion.choices[0].message.content
 
     def run(self, userInput):
-        self.generate(userInput)
+        return self.generate(userInput)
