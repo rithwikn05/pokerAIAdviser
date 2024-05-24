@@ -22,8 +22,54 @@
 </head>
 <body>
     <h1>Poker Analysis</h1>
-    <label for="inputText">Enter your hand:</label>
-    <input type="text" id="inputText">
+    <label for="card1Suit">Card 1 Suit:</label>
+    <select id="card1Suit">
+        <option value="spade">Spade</option>
+        <option value="heart">Heart</option>
+        <option value="diamond">Diamond</option>
+        <option value="club">Club</option>
+    </select>
+    <label for="card1Value">Card 1 Value:</label>
+    <select id="card1Value">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="jack">Jack</option>
+        <option value="queen">Queen</option>
+        <option value="king">King</option>
+        <option value="ace">Ace</option>
+    </select>
+    <br>
+    <label for="card2Suit">Card 2 Suit:</label>
+    <select id="card2Suit">
+        <option value="spade">Spade</option>
+        <option value="heart">Heart</option>
+        <option value="diamond">Diamond</option>
+        <option value="club">Club</option>
+    </select>
+    <label for="card2Value">Card 2 Value:</label>
+    <select id="card2Value">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="jack">Jack</option>
+        <option value="queen">Queen</option>
+        <option value="king">King</option>
+        <option value="ace">Ace</option>
+    </select>
+    <br>
     <button id="Generate" onclick="showText()">Generate Analysis</button>
     <div id="output">Your input will appear here.</div>
 

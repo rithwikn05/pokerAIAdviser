@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const inputText = document.getElementById('inputText');
+    const suitSelect = document.getElementById('suit');
+    const valueSelect = document.getElementById('value');
     const output = document.getElementById('output');
 
     window.showText = async function() {
-        const userInput = inputText.value;
+        const selectedSuit = suitSelect.value;
+        const selectedValue = valueSelect.value;
+        const userInput = `${selectedValue} of ${selectedSuit}s`;  // Format the user input as "Value of Suits"
         const response = await fetch('http://127.0.0.1:5000/generate', {
             method: 'POST',
             headers: {
-                'Content-Tpye': 'text/plain'
+                'Content-Type': 'text/plain'
             },
             body: userInput
         });
