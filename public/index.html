@@ -21,7 +21,8 @@
     </style>
 </head>
 <body>
-    <h1>Poker Analysis</h1>
+    <h1>My Poker Butler</h1>
+    <h2>Enter your hand</h2>
     <label for="card1Suit">Card 1 Suit:</label>
     <select id="card1Suit">
         <option value="spade">Spade</option>
@@ -70,8 +71,13 @@
         <option value="ace">Ace</option>
     </select>
     <br>
-    <button id="Generate" onclick="showText()">Generate Analysis</button>
-    <div id="output">Your input will appear here.</div>
+    <button id="Generate" onclick="showTextHand()">ask poker butler</button>
+    <br>
+    <label for="userInput">Enter your question:</label>
+    <input type="text" id="userInput">
+    <br>
+    <button id="Generate" onclick="showTextGeneral()">ask poker butler1</button>
+    <div id="output">Answers will appear here.</div>
 
     <script src="script.js"></script>
 </body>
