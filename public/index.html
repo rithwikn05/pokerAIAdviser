@@ -7,9 +7,17 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             background-color: green;
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
         }
         #output {
             margin-top: 20px;
@@ -17,68 +25,79 @@
             border: 1px solid #ddd;
             background-color: #f9f9f9;
             color: black;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
-    <h1>My Poker Butler</h1>
-    <h2>Enter your hand</h2>
-    <label for="card1Suit">Card 1 Suit:</label>
-    <select id="card1Suit">
-        <option value="spade">Spade</option>
-        <option value="heart">Heart</option>
-        <option value="diamond">Diamond</option>
-        <option value="club">Club</option>
-    </select>
-    <label for="card1Value">Card 1 Value:</label>
-    <select id="card1Value">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="jack">Jack</option>
-        <option value="queen">Queen</option>
-        <option value="king">King</option>
-        <option value="ace">Ace</option>
-    </select>
-    <br>
-    <label for="card2Suit">Card 2 Suit:</label>
-    <select id="card2Suit">
-        <option value="spade">Spade</option>
-        <option value="heart">Heart</option>
-        <option value="diamond">Diamond</option>
-        <option value="club">Club</option>
-    </select>
-    <label for="card2Value">Card 2 Value:</label>
-    <select id="card2Value">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="jack">Jack</option>
-        <option value="queen">Queen</option>
-        <option value="king">King</option>
-        <option value="ace">Ace</option>
-    </select>
-    <br>
-    <button id="Generate" onclick="showTextHand()">ask poker butler</button>
-    <br>
-    <label for="userInput">Enter your question:</label>
-    <input type="text" id="userInput">
-    <br>
-    <button id="Generate" onclick="showTextGeneral()">ask poker butler1</button>
-    <div id="output">Answers will appear here.</div>
-
+    <div class="container">
+        <h1>My Poker Butler</h1>
+        <h2>Enter your hand</h2>
+        <label for="card1Suit">Card 1 Suit:</label>
+        <select id="card1Suit" onchange="updateImage()">
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <label for="card1Value">Card 1 Value:</label>
+        <select id="card1Value">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="card2Suit">Card 2 Suit:</label>
+        <select id="card2Suit">
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <label for="card2Value">Card 2 Value:</label>
+        <select id="card2Value">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <button onclick="showTextHand()">Ask Poker Butler</button>
+        <br>
+        <img id="suitImage" src="spadesuit.jpg" alt="Card Suit">
+        <br>
+        <h2>Ask a Question</h2>
+        <label for="userInput">Enter your question:</label>
+        <input type="text" id="userInput">
+        <br>
+        <button onclick="showTextGeneral()">Ask Poker Butler</button>
+        <div id="output">Answers will appear here.</div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
