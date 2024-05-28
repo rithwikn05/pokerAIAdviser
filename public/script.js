@@ -6,27 +6,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const inputText = document.getElementById('userInput');
     const output = document.getElementById('output');
 
-    // Function to update the image based on card 1 suit selection
-    window.updateImage = function() {
-        const suit = card1Suit.value;
-        const image = document.getElementById('suitImage');
-        switch (suit) {
-            case 'spade':
-                image.src = 'spadesuit.jpg';
-                break;
-            case 'heart':
-                image.src = 'heartsuit.jpg';
-                break;
-            case 'diamond':
-                image.src = 'diamondsuit.jpg';
-                break;
-            case 'club':
-                image.src = 'clubsuit.jpg';
-                break;
-            default:
-                break;
+
+    function updateCardOptions() {
+        const selectedSuit1 = card1Suit.value;
+        const selectedValue1 = card1Value.value;
+        const selectedSuit2 = card2Suit.value;
+        const selectedValue2 = card2Value.value;
+
+        if (selectedValue1 === selectedValue2 && selectedSuit1 === selectedSuit2) {
+            card2Value.value = "?";
         }
-    };
+    }
+    function updateCardOptions2() {
+        const selectedSuit1 = card1Suit.value;
+        const selectedValue1 = card1Value.value;
+        const selectedSuit2 = card2Suit.value;
+        const selectedValue2 = card2Value.value;
+
+        if (selectedValue1 === selectedValue2 && selectedSuit1 === selectedSuit2) {
+            card1Value.value = "?";
+        }
+
+
+    }
+
+    // Initialize card options
+    updateCardOptions();
+
+    // Event listener for card1Suit and card1Value change
+    card1Suit.addEventListener('change', updateCardOptions);
+    card1Value.addEventListener('change', updateCardOptions);
+    card2Suit.addEventListener('change', updateCardOptions2);
+    card2Value.addEventListener('change', updateCardOptions2);
+
+
+    // Function to update the image based on card 1 suit selection
+    
 
     // Function to handle poker hand analysis
     window.showTextHand = async function() {

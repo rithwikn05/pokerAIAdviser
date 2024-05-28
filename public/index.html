@@ -33,6 +33,10 @@
             max-width: 100%;
             height: auto;
         }
+        .container img {
+            max-width: 20%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +45,7 @@
         <h2>Enter your hand</h2>
         <label for="card1Suit">Card 1 Suit:</label>
         <select id="card1Suit" onchange="updateImage()">
+            <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
@@ -48,6 +53,7 @@
         </select>
         <label for="card1Value">Card 1 Value:</label>
         <select id="card1Value">
+            <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -65,6 +71,7 @@
         <br>
         <label for="card2Suit">Card 2 Suit:</label>
         <select id="card2Suit">
+            <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
@@ -72,6 +79,7 @@
         </select>
         <label for="card2Value">Card 2 Value:</label>
         <select id="card2Value">
+            <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -89,7 +97,10 @@
         <br>
         <button onclick="showTextHand()">Ask Poker Butler</button>
         <br>
-        <img id="suitImage" src="spadesuit.jpg" alt="Card Suit">
+        <div class="container">
+            <img id="card1" src="cardspng/back.png" alt="card1img">
+            <img id="card2" src="cardspng/back.png" alt="card2img">
+        </div>
         <br>
         <h2>Ask a Question</h2>
         <label for="userInput">Enter your question:</label>
