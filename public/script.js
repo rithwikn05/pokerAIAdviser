@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const inputText = document.getElementById('userInput');
     const output = document.getElementById('output');
 
-
     function updateCardOptions() {
         const selectedSuit1 = card1Suit.value;
         const selectedValue1 = card1Value.value;
@@ -17,6 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             card2Value.value = "?";
         }
     }
+
     function updateCardOptions2() {
         const selectedSuit1 = card1Suit.value;
         const selectedValue1 = card1Value.value;
@@ -26,22 +26,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (selectedValue1 === selectedValue2 && selectedSuit1 === selectedSuit2) {
             card1Value.value = "?";
         }
-
-
     }
 
-    // Initialize card options
-    updateCardOptions();
+    function updateImages() {
+        updateCardOptions();
+        updateCardOptions2();
 
-    // Event listener for card1Suit and card1Value change
-    card1Suit.addEventListener('change', updateCardOptions);
-    card1Value.addEventListener('change', updateCardOptions);
-    card2Suit.addEventListener('change', updateCardOptions2);
-    card2Value.addEventListener('change', updateCardOptions2);
+        const card1 = document.getElementById('card1');
+        const card2 = document.getElementById('card2');
 
+        const card1SuitValue = card1Suit.value;
+        const card1ValueValue = card1Value.value;
+        const card2SuitValue = card2Suit.value;
+        const card2ValueValue = card2Value.value;
 
-    // Function to update the image based on card 1 suit selection
-    
+        if (card1SuitValue === "?" || card1ValueValue === "?") {
+            card1.src = "cardspng/back.png";
+        } else {
+            card1.src = `cardspng/${card1ValueValue}_of_${card1SuitValue}s.png`;
+        }
+
+        if (card2SuitValue === "?" || card2ValueValue === "?") {
+            card2.src = "cardspng/back.png";
+        } else {
+            card2.src = `cardspng/${card2ValueValue}_of_${card2SuitValue}s.png`;
+        }
+    }
+
+    card1Suit.addEventListener('change', updateImages);
+    card1Value.addEventListener('change', updateImages);
+    card2Suit.addEventListener('change', updateImages);
+    card2Value.addEventListener('change', updateImages);
 
     // Function to handle poker hand analysis
     window.showTextHand = async function() {
@@ -55,7 +70,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             },
             body: userInput
         });
-        if (response.ok) {
+        if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
+            output.textContent = "Please provide both cards in your hand.";
+        } else if (response.ok) {
             const data = await response.text();
             output.textContent = data || 'hello.';
         } else {
@@ -73,7 +90,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             },
             body: userInput
         });
-        if (response.ok) {
+        if (userInput == "" || userInput == " ") {
+            output.textContent = "Please provide your question.";
+        } else if (response.ok) {
             const data = await response.text();
             output.textContent = data || 'hello.';
         } else {

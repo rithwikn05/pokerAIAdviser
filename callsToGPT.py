@@ -15,7 +15,7 @@ class Implementation:
         If your friend asks you a general question about texas hold'em, you should answer the question in 1-2 sentences.
         If your friend gives you just a poker hand and no other information, 
         you are to do the following 4 tasks:
-        1. say just a single word recommendation for your friend: 
+        1. say just a single word recommendation for your friend (no need to say "recommendation: raise", your friend will understand): 
         fold, check, raise
         2. give a short, 1-sentence explanation of your previously recommended move
         3. In 1-sentence, list what type of cards your friend would want to see on the flop, turn, or river, 
@@ -27,8 +27,7 @@ class Implementation:
     
     def generate(self, prompt):
 
-        password = "nothingg"
-
+        password = "nothing"
         MODEL="gpt-4o"
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
 
@@ -45,8 +44,7 @@ class Implementation:
         
         return completion.choices[0].message.content
 
-    def run(self, userInput):
-        return self.generate(userInput)
+    
 
 impl = Implementation()
 

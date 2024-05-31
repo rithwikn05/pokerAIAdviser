@@ -29,22 +29,26 @@
             box-sizing: border-box;
         }
         img {
-            margin-top: 20px;
+            margin-top: 10px;
             max-width: 100%;
             height: auto;
         }
         .container img {
-            max-width: 20%;
+            max-width: 10%;
             height: auto;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>My Poker Butler</h1>
+        <h1>My Poker Butler ♠️🤵🏻‍♂️</h1>
+        <div class="container">
+            <img id="card1" src="cardspng/back.png" alt="card1img">
+            <img id="card2" src="cardspng/back.png" alt="card2img">
+        </div>
         <h2>Enter your hand</h2>
         <label for="card1Suit">Card 1 Suit:</label>
-        <select id="card1Suit" onchange="updateImage()">
+        <select id="card1Suit" onchange="updateImages()">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
@@ -52,7 +56,7 @@
             <option value="club">Club</option>
         </select>
         <label for="card1Value">Card 1 Value:</label>
-        <select id="card1Value">
+        <select id="card1Value" onchange="updateImages()">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -70,7 +74,7 @@
         </select>
         <br>
         <label for="card2Suit">Card 2 Suit:</label>
-        <select id="card2Suit">
+        <select id="card2Suit" onchange="updateImages()">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
@@ -78,7 +82,7 @@
             <option value="club">Club</option>
         </select>
         <label for="card2Value">Card 2 Value:</label>
-        <select id="card2Value">
+        <select id="card2Value" onchange="updateImages()">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -96,11 +100,6 @@
         </select>
         <br>
         <button onclick="showTextHand()">Ask Poker Butler</button>
-        <br>
-        <div class="container">
-            <img id="card1" src="cardspng/back.png" alt="card1img">
-            <img id="card2" src="cardspng/back.png" alt="card2img">
-        </div>
         <br>
         <h2>Ask a Question</h2>
         <label for="userInput">Enter your question:</label>
