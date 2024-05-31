@@ -40,17 +40,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const card2SuitValue = card2Suit.value;
         const card2ValueValue = card2Value.value;
 
-        if (card1SuitValue === "?" || card1ValueValue === "?") {
-            card1.src = "cardspng/back.png";
-        } else {
-            card1.src = `cardspng/${card1ValueValue}_of_${card1SuitValue}s.png`;
-        }
-
-        if (card2SuitValue === "?" || card2ValueValue === "?") {
-            card2.src = "cardspng/back.png";
-        } else {
-            card2.src = `cardspng/${card2ValueValue}_of_${card2SuitValue}s.png`;
-        }
+        card1.src = (card1SuitValue === "?" || card1ValueValue === "?") ? "cardspng/back.png" : `cardspng/${card1ValueValue}_of_${card1SuitValue}s.png`;
+        card2.src = (card2SuitValue === "?" || card2ValueValue === "?") ? "cardspng/back.png" : `cardspng/${card2ValueValue}_of_${card2SuitValue}s.png`;
     }
 
     card1Suit.addEventListener('change', updateImages);
@@ -83,7 +74,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Function to handle general questions
     window.showTextGeneral = async function() {
         const userInput = inputText.value; // Retrieve the value from the input field
-        const response = await fetch('http://127.0.0.1:5000/generate', {
+        const response = await fetch('http://127.0.0.1:5000/generate2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
