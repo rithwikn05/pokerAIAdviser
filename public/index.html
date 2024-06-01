@@ -49,7 +49,7 @@
             <img id="card2" src="cardspng/back.png" alt="card2img">
         </div>
         <h2>Enter your hand</h2>
-        <label for="card1Suit">Card 1:</label>
+        <label for="card1Suit">Hand Card 1:</label>
         <select id="card1Suit" onchange="updateImages()">
             <option value="?">?</option>
             <option value="spade">Spade</option>
@@ -74,7 +74,7 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <label for="card2">Card 2:</label>
+        <label for="card2">Hand Card 2:</label>
         <select id="card2Suit" onchange="updateImages()">
             <option value="?">?</option>
             <option value="spade">Spade</option>
@@ -102,6 +102,18 @@
         <button onclick="showTextHand()">Ask Poker Butler</button>
         <br>
 
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- New Section: Board Cards -->
         <h2>Enter the board cards</h2>
         <div class="container">
@@ -111,15 +123,15 @@
             <img id="boardCard4" src="cardspng/back.png" alt="boardCard4img">
             <img id="boardCard5" src="cardspng/back.png" alt="boardCard5img">
         </div>
-        <label for="boardCard1Suit">Card 1:</label>
-        <select id="boardCard1Suit" onchange="updateImages()">
+        <label for="boardCard1Suit">Flop Card 1:</label>
+        <select id="boardCard1Suit" onchange="updateImages(2)">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
             <option value="club">Club</option>
         </select>
-        <select id="boardCard1Value" onchange="updateImages()">
+        <select id="boardCard1Value" onchange="updateImages(2)">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -136,15 +148,15 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <label for="boardCard2Suit">Card 2:</label>
-        <select id="boardCard2Suit" onchange="updateImages()">
+        <label for="boardCard2Suit">Flop Card 2:</label>
+        <select id="boardCard2Suit" onchange="updateImages(3)">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
             <option value="club">Club</option>
         </select>
-        <select id="boardCard2Value" onchange="updateImages()">
+        <select id="boardCard2Value" onchange="updateImages(3)">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -161,40 +173,15 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <label for="boardCard3Suit">Card 3:</label>
-        <select id="boardCard3Suit" onchange="updateImages()">
+        <label for="boardCard3Suit">Flop Card 3:</label>
+        <select id="boardCard3Suit" onchange="updateImages(4)">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
             <option value="club">Club</option>
         </select>
-        <select id="boardCard3Value" onchange="updateImages()">
-            <option value="?">?</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4"></option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="jack">Jack</option>
-            <option value="queen">Queen</option>
-            <option value="king">King</option>
-            <option value="ace">Ace</option>
-        </select>
-        <br>
-        <label for="boardCard4Suit">Card 4:</label>
-        <select id="boardCard4Suit" onchange="updateImages()">
-            <option value="?">?</option>
-            <option value="spade">Spade</option>
-            <option value="heart">Heart</option>
-            <option value="diamond">Diamond</option>
-            <option value="club">Club</option>
-        </select>
-        <select id="boardCard4Value" onchange="updateImages()">
+        <select id="boardCard3Value" onchange="updateImages(4)">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -211,15 +198,40 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <label for="boardCard5Suit">Card 5:</label>
-        <select id="boardCard5Suit" onchange="updateImages()">
+        <label for="boardCard4Suit">Turn Card:</label>
+        <select id="boardCard4Suit" onchange="updateImages(5)">
             <option value="?">?</option>
             <option value="spade">Spade</option>
             <option value="heart">Heart</option>
             <option value="diamond">Diamond</option>
             <option value="club">Club</option>
         </select>
-        <select id="boardCard5Value" onchange="updateImages()">
+        <select id="boardCard4Value" onchange="updateImages(5)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="boardCard5Suit">River Card:</label>
+        <select id="boardCard5Suit" onchange="updateImages(6)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard5Value" onchange="updateImages(6)">
             <option value="?">?</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -239,6 +251,24 @@
         <button onclick="showTextBoard()">Ask Poker Butler</button>
         <br>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         <!-- Section 3: General Questions -->
         <h2>Ask a Question</h2>
         <label for="userInput">Enter your question:</label>
