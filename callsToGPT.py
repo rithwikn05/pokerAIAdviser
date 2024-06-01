@@ -44,35 +44,14 @@ class Implementation:
         
         return completion.choices[0].message.content
     
-
-    def generate2(self, prompt, sinput):
-
-        password = "nothing"
-        MODEL="gpt-4o"
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
-
-        
-        self.prompt_field = prompt
-        api_key = password
-        completion = client.chat.completions.create(
-            model=MODEL,
-            messages = [
-                {"role": "system", "content": sinput},
-                {"role": "user", "content": self.prompt_field}
-            ],
-        )
-        
-        return completion.choices[0].message.content
-
     
 
 impl = Implementation()
 
-@app.route('/generate', methods = ['POST'])
-def generateOutput():
+@app.route('/generatehandanalysis', methods = ['POST'])
+def handanalysis():
     system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
-        If your friend asks you a general question about texas hold'em, you should answer the question in 1-2 sentences.
-        If your friend gives you just a poker hand and no other information, 
+        Your friend gives you just a poker hand and no other information, 
         you are to do the following 4 tasks:
         1. say just a single word recommendation for your friend (no need to say "recommendation: raise", your friend will understand): 
         fold, check, raise
@@ -86,9 +65,10 @@ def generateOutput():
     output = impl.generate(prompt, system_input)
     return output, 200, {'Content-Type': 'text/plain'}
 
-@app.route('/generate2', methods = ['POST'])
-def handanalysis():
-    system_input = "say hello"
+@app.route('/generategeneralquestion', methods = ['POST'])
+def generalquestion():
+    system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
+        You should answer your friend's general question about texas hold'em, you should answer the question in 1-3 sentences.'''
     prompt = request.data.decode('utf-8')
     output = impl.generate(prompt, system_input)
     return output, 200, {'Content-Type': 'text/plain'}
