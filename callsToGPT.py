@@ -55,7 +55,7 @@ def handanalysis():
         you are to do the following 4 tasks:
         1. say just a single word recommendation for your friend (no need to say "recommendation: raise", your friend will understand): 
         fold, check, raise
-        2. give a short, 1-sentence explanation of your previously recommended move
+        2. give a short, 1-sentence explanation of your previously recommended move (why the hand the strong or weak)
         3. In 1-sentence, list what type of cards your friend would want to see on the flop, turn, or river, 
         and why those cards would help strengthen their hand.
         4. Then, in 1-sentence, list what other players could have that would beat your friend's hand.
@@ -74,6 +74,27 @@ def generalquestion():
     return output, 200, {'Content-Type': 'text/plain'}
 
 
+@app.route('/generatebBoardFlop', methods = ['POST'])
+def generalquestion():
+    system_input = '''just say "flop analysis" word for word'''
+    prompt = request.data.decode('utf-8')
+    output = impl.generate(prompt, system_input)
+    return output, 200, {'Content-Type': 'text/plain'}
+
+@app.route('/generatebBoardTurn', methods = ['POST'])
+def generalquestion():
+    system_input = '''just say "turn analysis" word for word'''
+    prompt = request.data.decode('utf-8')
+    output = impl.generate(prompt, system_input)
+    return output, 200, {'Content-Type': 'text/plain'}
+
+
+@app.route('/generatebBoardRiver', methods = ['POST'])
+def generalquestion():
+    system_input = '''just say "river analysis" word for word'''
+    prompt = request.data.decode('utf-8')
+    output = impl.generate(prompt, system_input)
+    return output, 200, {'Content-Type': 'text/plain'}
 
 if __name__ == "__main__":
     app.run()

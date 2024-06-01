@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
         for (let i = 0; i < cardsArray.length; i++) {
             for (let j = i + 1; j < cardsArray.length; j++) {
-                if (cardsArray[i] && cardsArray[j] && cardsArray[i].suit === cardsArray[j].suit && cardsArray[i].value === cardsArray[j].value) {
+                if (cardsArray[i] && cardsArray[j] && cardsArray[i].suit === cardsArray[j].suit && cardsArray[i].value === cardsArray[j].value && (cardsArray[i].value !== "?" && cardsArray[i].suit !== "?")) {
                     cardsArray[j] = { suit: "?", value: "?" };
                     if (j === 0) {
                         card1Suit.value = "?";
@@ -154,16 +154,59 @@ document.addEventListener('DOMContentLoaded', (event) => {
             `${boardCard5Value.value} of ${boardCard5Suit.value}s`
         ].join(', ');
 
+        const flopCards = [
+            `${boardCard1Value.value} of ${boardCard1Suit.value}s`,
+            `${boardCard2Value.value} of ${boardCard2Suit.value}s`,
+            `${boardCard3Value.value} of ${boardCard3Suit.value}s`
+        ].join(', ');
+
+        const turnCards = [
+            `${boardCard4Value.value} of ${boardCard4Suit.value}s`,
+        ].join(', ');
+
+        const riverCards = [
+            `${boardCard5Value.value} of ${boardCard5Suit.value}s`,
+        ].join(', ');
+
+
+
+
+
+
         const userInput = `Board Cards: ${boardCards}`;
-        const response = await fetch('http://127.0.0.1:5000/generateBoard', {
+        const responseFlop = await fetch('http://127.0.0.1:5000/generateBoardFlop', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
             },
             body: userInput
         });
-        if (boardCards.includes("?")) {
-            output.textContent = "Please provide all board cards.";
+
+        const responseTurn = await fetch('http://127.0.0.1:5000/generateBoardTurn', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: userInput
+        });
+
+        const responseRiver = await fetch('http://127.0.0.1:5000/generateBoardRiver', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: userInput
+        });
+
+
+
+
+
+
+        if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
+            output.textContent = "Please provide both cards in your hand.";
+        } else if (flopCards.includes("?")) {
+            output.textContent = "Please provide all cards on the flop";
         } else if (response.ok) {
             const data = await response.text();
             output.textContent = data || 'hello.';
