@@ -122,10 +122,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     boardCard5Suit.addEventListener('change', () => updateImages(6));
     boardCard5Value.addEventListener('change', () => updateImages(6));
 
+    
     // Function to handle poker hand analysis
     window.showTextHand = async function() {
+        
         const card1 = `${card1Value.value} of ${card1Suit.value}s`;
         const card2 = `${card2Value.value} of ${card2Suit.value}s`;
+        
         const userInput = `Card 1: ${card1}, Card 2: ${card2}`;
         const response = await fetch('http://127.0.0.1:5000/generatehandanalysis', {
             method: 'POST',
@@ -159,22 +162,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             `${boardCard2Value.value} of ${boardCard2Suit.value}s`,
             `${boardCard3Value.value} of ${boardCard3Suit.value}s`
         ].join(', ');
-
-        const turnCards = [
-            `${boardCard4Value.value} of ${boardCard4Suit.value}s`,
-        ].join(', ');
-
-        const riverCards = [
-            `${boardCard5Value.value} of ${boardCard5Suit.value}s`,
-        ].join(', ');
+    
+        const turnCard = `${boardCard4Value.value} of ${boardCard4Suit.value}s`;
+        const riverCard = `${boardCard5Value.value} of ${boardCard5Suit.value}s`;
 
 
+        const card1 = `${card1Value.value} of ${card1Suit.value}s`;
+        const card2 = `${card2Value.value} of ${card2Suit.value}s`;
 
+        const userInput = `My cards are Card 1: ${card1}, Card 2: ${card2}. Flop cards are ${flopCards}. Turn card is ${turnCard}. River card is ${riverCard}.`;
+    
 
-
-
-        const userInput = `Board Cards: ${boardCards}`;
-        const responseFlop = await fetch('http://127.0.0.1:5000/generateBoardFlop', {
+        const responseFlop = await fetch('http://127.0.0.1:5000/generatebflop', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -182,7 +181,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: userInput
         });
 
-        const responseTurn = await fetch('http://127.0.0.1:5000/generateBoardTurn', {
+        const responseTurn = await fetch('http://127.0.0.1:5000/generatebturn', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -190,7 +189,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: userInput
         });
 
-        const responseRiver = await fetch('http://127.0.0.1:5000/generateBoardRiver', {
+        const responseRiver = await fetch('http://127.0.0.1:5000/generatebriver', {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -207,9 +206,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             output.textContent = "Please provide both cards in your hand.";
         } else if (flopCards.includes("?")) {
             output.textContent = "Please provide all cards on the flop";
-        } else if (response.ok) {
-            const data = await response.text();
-            output.textContent = data || 'hello.';
+        } else if (responseFlop.ok && boardCard4Value.value === "?" && boardCard4Suit.value === "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
+            const data = await responseFlop.text();
+            output.textContent = data || "gpt returned nothing somehow...";
+            
         } else {
             output.textContent = 'An error occurred.';
         }
