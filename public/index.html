@@ -19,6 +19,10 @@
             text-align: center;
             margin-top: 20px;
         }
+        .body-text {
+            margin: 0;
+            padding: 0;
+        }
         #output {
             margin-top: 20px;
             padding: 10px;
@@ -44,11 +48,11 @@
         <h1>My Poker Butler ♠️🤵🏻‍♂️</h1>
         
         <!-- Section 1: Player's Hand -->
+        <h2>Enter your hand</h2>
         <div class="container">
             <img id="card1" src="cardspng/back.png" alt="card1img">
             <img id="card2" src="cardspng/back.png" alt="card2img">
         </div>
-        <h2>Enter your hand</h2>
         <label for="card1Suit">Hand Card 1:</label>
         <select id="card1Suit" onchange="updateImages()">
             <option value="?">?</option>
@@ -115,7 +119,7 @@
 
 
         <!-- New Section: Board Cards -->
-        <h2>Enter the board cards</h2>
+        <h2>Enter the board cards (optional)</h2>
         <div class="container">
             <img id="boardCard1" src="cardspng/back.png" alt="boardCard1img">
             <img id="boardCard2" src="cardspng/back.png" alt="boardCard2img">
@@ -275,7 +279,13 @@
         <input type="text" id="userInput">
         <br>
         <button onclick="showTextGeneral()">Ask Poker Butler</button>
+
         <div id="output">Answers will appear here.</div>
+
+        <br>
+        <p class="body-text">This website was made by 2 finalists of the StanfordxBerkeley Poker Tournament. One of us even got a royal flush!</p>
+        <br>
+        <br>
     </div>
     <script src="script.js"></script>
 </body>

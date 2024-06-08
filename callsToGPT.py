@@ -18,7 +18,7 @@ class Implementation:
         1. say just a single word recommendation for your friend (no need to say "recommendation: raise", your friend will understand): 
         fold, check, raise
         2. give a short, 1-sentence explanation of your previously recommended move
-        3. In 1-sentence, list what type of cards your friend would want to see on the flop, turn, or river, 
+        3. In 1-sentence, list what type of cards your friend wouldw want to see on the flop, turn, or river, 
         and why those cards would help strengthen their hand.
         4. Then, in 1-sentence, list what other players could have that would beat your friend's hand.
         After writing each task, always start writing the next task in a new line and number each task in the beginning of the line.
@@ -27,7 +27,7 @@ class Implementation:
     
     def generate(self, prompt, sinput):
 
-        password = "nothing at all"
+        password = "nothing"
         MODEL="gpt-4o"
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
 
@@ -79,10 +79,9 @@ def flopanalysis():
 
     system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
         Your friend gives you just a poker hand and the cards on the flop, the turn and river have not been shown yet.
-        you are to do the following 4 tasks:
-        1. say just a single word recommendation for your friend (no need to say "recommendation: raise", your friend will understand the one word output): 
-        fold, check, raise
-        2. give a short, 1-sentence explanation of your previously recommended move (why the hand & flop is strong or weak)
+        You're friend is playing at the table and needs your advice, but can receive texts, so you must keep it short and ONLY do the following:
+        1. say just a single word recommendation of fold, check, or raise (only 1 word!!!) for your friend (no need to say "recommendation: raise", your friend will understand the one word output)
+        2. give a short, 1-sentence explanation of your previously recommended move (why the hand & flop is strong or weak to justify your recommendation)
         3. In 1-sentence, list what type of cards your friend would want to see on the turn and river, 
         and why those cards would help strengthen their hand.
         4. Then, in 1-sentence, list what other players could have that would beat your friend's hand.
@@ -94,7 +93,15 @@ def flopanalysis():
 
 @app.route('/generatebturn', methods = ['POST'])
 def turnanalysis():
-    system_input = '''just say "turn analysis" word for word'''
+    system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
+        Your friend gives you just a poker hand and the cards on the flop and the turn, but the river has not been shown yet.
+        You're friend is playing at the table and needs your advice, but can receive texts, so you must keep it short and ONLY do the following:
+        1. say just a single word recommendation of fold, check, or raise (only 1 word!!!) for your friend (no need to say "recommendation: raise", your friend will understand the one word output)
+        2. give a short, 1-sentence explanation of your previously recommended move (why the hand & flop is strong or weak to justify your recommendation)
+        3. In 1-sentence, list what type of cards your friend would want to see on the river, 
+        and why those cards would help strengthen their hand.
+        4. Then, in 1-sentence, list what other players could have that would beat your friend's hand.
+        After writing each task, always start writing the next task in a new line and number each task in the beginning of the line.'''
     prompt = request.data.decode('utf-8')
     output = impl.generate(prompt, system_input)
     return output, 200, {'Content-Type': 'text/plain'}
@@ -102,7 +109,14 @@ def turnanalysis():
 
 @app.route('/generatebriver', methods = ['POST'])
 def riveranalysis():
-    system_input = '''just say "river analysis" word for word'''
+    system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
+        Your friend gives you a poker hand and the cards on the flop, turn, and river, so all cards are shown
+        You're friend is playing at the table and needs your advice, but can receive texts, so you must keep it short and ONLY do the following:
+        1. say just a single word recommendation of fold, check, or raise (only 1 word!!!) for your friend (no need to say "recommendation: raise", your friend will understand the one word output)
+        2. give a short, 1-sentence explanation of your previously recommended move (why the hand & flop is strong or weak to justify your recommendation)
+        3. Just say "All cards have been dealt." word for word, 
+        3. Then, in 1-sentence, list what other players could have that would beat your friend's hand.
+        After writing each task, always start writing the next task in a new line and number each task in the beginning of the line.'''
     prompt = request.data.decode('utf-8')
     output = impl.generate(prompt, system_input)
     return output, 200, {'Content-Type': 'text/plain'}

@@ -173,29 +173,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const userInput = `My cards are Card 1: ${card1}, Card 2: ${card2}. Flop cards are ${flopCards}. Turn card is ${turnCard}. River card is ${riverCard}.`;
     
 
-        const responseFlop = await fetch('http://127.0.0.1:5000/generatebflop', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: userInput
-        });
-
-        const responseTurn = await fetch('http://127.0.0.1:5000/generatebturn', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: userInput
-        });
-
-        const responseRiver = await fetch('http://127.0.0.1:5000/generatebriver', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: userInput
-        });
+        
 
 
 
@@ -206,12 +184,61 @@ document.addEventListener('DOMContentLoaded', (event) => {
             output.textContent = "Please provide both cards in your hand.";
         } else if (flopCards.includes("?")) {
             output.textContent = "Please provide all cards on the flop";
-        } else if (responseFlop.ok && boardCard4Value.value === "?" && boardCard4Suit.value === "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
-            const data = await responseFlop.text();
-            output.textContent = data || "gpt returned nothing somehow...";
+        } else if (boardCard4Value.value === "?" && boardCard4Suit.value === "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
+            const responseFlop = await fetch('http://127.0.0.1:5000/generatebflop', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: userInput
+            });
+
+            if (responseFlop.ok) {
+                const data = await responseFlop.text();
+                output.textContent = data || "gpt returned nothing somehow...";
+            } else {
+                output.textContent = "smth wrong with GPT, output not ok"
+            }
             
+        } else if (boardCard4Value.value != "?" && boardCard4Suit.value != "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
+            const responseTurn = await fetch('http://127.0.0.1:5000/generatebturn', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: userInput
+            });
+
+            if (responseTurn.ok) {
+                const data = await responseTurn.text();
+                output.textContent = data || "gpt returned nothing somehow...";
+            } else {
+                output.textContent = "smth wrong with GPT, output not ok"
+            }
+
+        } else if (boardCard4Value.value === "?" || boardCard4Suit.value === "?") {
+            output.textContent = "Please provide all cards on the turn or replace them with '?' ";
+        } else if (boardCard5Value.value === "?" || boardCard5Suit.value === "?") {
+            output.textContent = "Please provide all cards on the river or replace them with '?' ";
+        } else if (!boardCards.includes("?")) {
+
+            const responseRiver = await fetch('http://127.0.0.1:5000/generatebriver', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: userInput
+            });
+
+            if (responseRiver.ok) {
+                const data = await responseRiver.text();
+            output.textContent = data || "gpt returned nothing somehow...";
+            } else {
+                output.textContent = "smth wrong with GPT, output not ok"
+            }
+
         } else {
-            output.textContent = 'An error occurred.';
+            output.textContent = "If statements not inclusive, try again"
         }
     };
 
