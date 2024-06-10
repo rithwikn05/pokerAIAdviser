@@ -6,7 +6,7 @@
     <title>Interactive Text Box</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Tahoma, sans-serif;
             margin: 0;
             background-color: green;
             color: white;
@@ -23,14 +23,25 @@
             margin: 0;
             padding: 0;
         }
-        #output {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            color: black;
-            width: 100%;
-            box-sizing: border-box;
+        .output-container {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 20px;
+        }
+        .output-label {
+        flex: 1;
+        margin-right: 10px;
+        font-size: 20px; /* Adjust the font size here */
+        font-weight: bold; /* Optionally, make the label bold */
+        }
+        .output {
+        flex: 4;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        color: black;
+        width: 100%;
+        box-sizing: border-box;
         }
         img {
             margin-top: 10px;
@@ -103,7 +114,7 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <button onclick="showTextHand()">Ask Poker Butler</button>
+        <button onclick="showTextHand()">Hand Analysis</button>
         <br>
 
 
@@ -252,11 +263,31 @@
             <option value="ace">Ace</option>
         </select>
         <br>
-        <button onclick="showTextBoard()">Ask Poker Butler</button>
+        <button onclick="showTextBoard()">Hand & Board Analysis</button>
         <br>
 
 
+        <div class="output-container">
+            <div class="output-label">Recommendation</div>
+            <div id="output1" class="output">Answers will appear here.</div>
+        </div>
 
+        <div class="output-container">
+            <div class="output-label">Hand Analysis</div>
+            <div id="output2" class="output">Answers will appear here.</div>
+        </div>
+
+        <div class="output-container">
+            <div class="output-label">Possible Improvements</div>
+            <div id="output3" class="output">Answers will appear here.</div>
+        </div>
+
+        <div class="output-container">
+            <div class="output-label">Opponent Considerations</div>
+            <div id="output4" class="output">Answers will appear here.</div>
+        </div>
+
+        
 
 
 
@@ -280,10 +311,11 @@
         <br>
         <button onclick="showTextGeneral()">Ask Poker Butler</button>
 
-        <div id="output">Answers will appear here.</div>
+        
+        <div id="output5" class="output">Answers will appear here.</div>
 
         <br>
-        <p class="body-text">This website was made by 2 finalists of the StanfordxBerkeley Poker Tournament. One of us even got a royal flush!</p>
+        <p class="body-text">This website was made by 2 finalists of the StanfordxBerkeley Poker Tournament - during which, one of us even got a royal flush!</p>
         <br>
         <br>
     </div>

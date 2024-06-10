@@ -16,7 +16,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const boardCard5Value = document.getElementById('boardCard5Value');
 
     const inputText = document.getElementById('userInput');
-    const output = document.getElementById('output');
+    const output1 = document.getElementById('output1');
+    const output2 = document.getElementById('output2');
+    const output3 = document.getElementById('output3');
+    const output4 = document.getElementById('output4');
+    const output5 = document.getElementById('output5');
+
 
     let cardsArray = new Array(7).fill(null);
 
@@ -125,6 +130,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     // Function to handle poker hand analysis
     window.showTextHand = async function() {
+
+        function sectionsplitter (text) { // I MADE TWO OF THESE FUNCTIONS!!! one is in the next async function
+
+            const sections = [];
+            let startIndex = 0;
+    
+            for (let i = 1; i <= 4; i++) {
+                const searchString = `${i}. `;
+                const index = text.indexOf(searchString, startIndex);
+            
+                if (index !== -1) {
+                    const nextIndex = text.indexOf(`${i + 1}. `, index + 1);
+                    if (nextIndex !== -1) {
+                        sections.push(text.slice(index, nextIndex).trim());
+                        startIndex = nextIndex;
+                    } else {
+                        sections.push(text.slice(index).trim());
+                        break;
+                    }
+                }
+            }
+            
+    
+            if (sections.length === 4) {
+                document.getElementById("output1").textContent = sections[0];
+                document.getElementById("output2").textContent = sections[1];
+                document.getElementById("output3").textContent = sections[2];
+                document.getElementById("output4").textContent = sections[3];
+            } else {
+                // Handle case where the response doesn't have exactly 4 sections
+                document.getElementById("output1").textContent = "Unexpected response format.";
+            }
+    
+    
+        }
+
         
         const card1 = `${card1Value.value} of ${card1Suit.value}s`;
         const card2 = `${card2Value.value} of ${card2Suit.value}s`;
@@ -138,17 +179,59 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: userInput
         });
         if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
-            output.textContent = "Please provide both cards in your hand.";
+            output1.textContent = "Please provide both cards in your hand.";
         } else if (response.ok) {
             const data = await response.text();
-            output.textContent = data || 'hello.';
+
+            //output1.textContent = data || 'hello.';
+
+            sectionsplitter(data)
+
         } else {
-            output.textContent = 'An error occurred.';
+            output1.textContent = 'An error occurred.';
         }
     };
 
     // Function to handle board card analysis
     window.showTextBoard = async function() {
+
+
+
+        function sectionsplitter (text) { // I MADE TWO OF THESE FUNCTIONS!!! one is in the next async function
+
+            const sections = [];
+            let startIndex = 0;
+    
+            for (let i = 1; i <= 4; i++) {
+                const searchString = `${i}. `;
+                const index = text.indexOf(searchString, startIndex);
+            
+                if (index !== -1) {
+                    const nextIndex = text.indexOf(`${i + 1}. `, index + 1);
+                    if (nextIndex !== -1) {
+                        sections.push(text.slice(index, nextIndex).trim());
+                        startIndex = nextIndex;
+                    } else {
+                        sections.push(text.slice(index).trim());
+                        break;
+                    }
+                }
+            }
+            
+    
+            if (sections.length === 4) {
+                document.getElementById("output1").textContent = sections[0];
+                document.getElementById("output2").textContent = sections[1];
+                document.getElementById("output3").textContent = sections[2];
+                document.getElementById("output4").textContent = sections[3];
+            } else {
+                // Handle case where the response doesn't have exactly 4 sections
+                document.getElementById("output1").textContent = "Unexpected response format.";
+            }
+    
+    
+        }
+
         const boardCards = [
             `${boardCard1Value.value} of ${boardCard1Suit.value}s`,
             `${boardCard2Value.value} of ${boardCard2Suit.value}s`,
@@ -181,9 +264,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
         if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
-            output.textContent = "Please provide both cards in your hand.";
+            output1.textContent = "Please provide both cards in your hand.";
         } else if (flopCards.includes("?")) {
-            output.textContent = "Please provide all cards on the flop";
+            output1.textContent = "Please provide all cards on the flop";
         } else if (boardCard4Value.value === "?" && boardCard4Suit.value === "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
             const responseFlop = await fetch('http://127.0.0.1:5000/generatebflop', {
             method: 'POST',
@@ -194,10 +277,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
 
             if (responseFlop.ok) {
+
                 const data = await responseFlop.text();
-                output.textContent = data || "gpt returned nothing somehow...";
+                output1.textContent = data
+                sectionsplitter(data)
+
             } else {
-                output.textContent = "smth wrong with GPT, output not ok"
+                output1.textContent = "smth wrong with GPT, output1 not ok"
             }
             
         } else if (boardCard4Value.value != "?" && boardCard4Suit.value != "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
@@ -211,15 +297,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             if (responseTurn.ok) {
                 const data = await responseTurn.text();
-                output.textContent = data || "gpt returned nothing somehow...";
+                sectionsplitter(data)
             } else {
-                output.textContent = "smth wrong with GPT, output not ok"
+                output1.textContent = "smth wrong with GPT, output1 not ok"
             }
 
         } else if (boardCard4Value.value === "?" || boardCard4Suit.value === "?") {
-            output.textContent = "Please provide all cards on the turn or replace them with '?' ";
+            output1.textContent = "Please provide all cards on the turn or replace them with '?' ";
         } else if (boardCard5Value.value === "?" || boardCard5Suit.value === "?") {
-            output.textContent = "Please provide all cards on the river or replace them with '?' ";
+            output1.textContent = "Please provide all cards on the river or replace them with '?' ";
         } else if (!boardCards.includes("?")) {
 
             const responseRiver = await fetch('http://127.0.0.1:5000/generatebriver', {
@@ -232,13 +318,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             if (responseRiver.ok) {
                 const data = await responseRiver.text();
-            output.textContent = data || "gpt returned nothing somehow...";
+                sectionsplitter(data)
             } else {
-                output.textContent = "smth wrong with GPT, output not ok"
+                output1.textContent = "smth wrong with GPT, output1 not ok"
             }
 
         } else {
-            output.textContent = "If statements not inclusive, try again"
+            output1.textContent = "If statements not inclusive, try again"
         }
     };
 
@@ -253,7 +339,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             body: userInput
         });
         const data = await response.text();
-        output.textContent = data || 'hello.';
+        output5.textContent = data || 'hello.';
     };
 
     inputText.addEventListener('keypress', async function(event) {
@@ -267,7 +353,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 body: userInput
             });
             const data = await response.text();
-            output.textContent = data || 'hello.';
+            output1.textContent = data || 'hello.';
         }
     });
+
+
+    
+
+
+
+
 });

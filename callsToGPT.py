@@ -27,7 +27,7 @@ class Implementation:
     
     def generate(self, prompt, sinput):
 
-        password = "nothing"
+        password = "nothinggg"
         MODEL="gpt-4o"
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
 
@@ -110,7 +110,7 @@ def turnanalysis():
 @app.route('/generatebriver', methods = ['POST'])
 def riveranalysis():
     system_input = '''You are an expert in texas hold'em, trying to teach a friend how to play in real-time.
-        Your friend gives you a poker hand and the cards on the flop, turn, and river, so all cards are shown
+        Your friend gives you a poker hand and the cards on the flop, turn, and river, so all cards are shown, so there are no possiblities of future cards (flush or straight draws don't matter)
         You're friend is playing at the table and needs your advice, but can receive texts, so you must keep it short and ONLY do the following:
         1. say just a single word recommendation of fold, check, or raise (only 1 word!!!) for your friend (no need to say "recommendation: raise", your friend will understand the one word output)
         2. give a short, 1-sentence explanation of your previously recommended move (why the hand & flop is strong or weak to justify your recommendation)
