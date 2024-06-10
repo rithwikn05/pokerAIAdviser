@@ -27,7 +27,7 @@ class Implementation:
     
     def generate(self, prompt, sinput):
 
-        password = "nothinggg"
+        password = "nothing"
         MODEL="gpt-4o"
         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", password))
 

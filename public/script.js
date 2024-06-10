@@ -154,10 +154,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
     
             if (sections.length === 4) {
-                document.getElementById("output1").textContent = sections[0];
-                document.getElementById("output2").textContent = sections[1];
-                document.getElementById("output3").textContent = sections[2];
-                document.getElementById("output4").textContent = sections[3];
+                document.getElementById("output1").textContent = sections[0].substring(2);
+                document.getElementById("output2").textContent = sections[1].substring(2);
+                document.getElementById("output3").textContent = sections[2].substring(2);
+                document.getElementById("output4").textContent = sections[3].substring(2);
             } else {
                 // Handle case where the response doesn't have exactly 4 sections
                 document.getElementById("output1").textContent = "Unexpected response format.";
@@ -220,10 +220,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             
     
             if (sections.length === 4) {
-                document.getElementById("output1").textContent = sections[0];
-                document.getElementById("output2").textContent = sections[1];
-                document.getElementById("output3").textContent = sections[2];
-                document.getElementById("output4").textContent = sections[3];
+                document.getElementById("output1").textContent = sections[0].substring(2);
+                document.getElementById("output2").textContent = sections[1].substring(2);
+                document.getElementById("output3").textContent = sections[2].substring(2);
+                document.getElementById("output4").textContent = sections[3].substring(2);
             } else {
                 // Handle case where the response doesn't have exactly 4 sections
                 document.getElementById("output1").textContent = "Unexpected response format.";
