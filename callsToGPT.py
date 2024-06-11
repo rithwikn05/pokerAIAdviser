@@ -1,5 +1,5 @@
 from openai import OpenAI 
-from flask import Flask, request
+from flask import Flask, send_from_directory, request, render_template, url_for
 from flask_cors import CORS
 import os
 
@@ -47,6 +47,10 @@ class Implementation:
     
 
 impl = Implementation()
+
+@app.route('/')
+def index():
+    return send_from_directory('.', 'index.html')
 
 @app.route('/generatehandanalysis', methods = ['POST'])
 def handanalysis():
@@ -122,4 +126,4 @@ def riveranalysis():
     return output, 200, {'Content-Type': 'text/plain'}
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)

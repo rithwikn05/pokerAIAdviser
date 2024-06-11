@@ -1,0 +1,674 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Interactive Text Box</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 20px;-->
+<!--        }-->
+<!--        #output {-->
+<!--            margin-top: 20px;-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ddd;-->
+<!--            background-color: #f9f9f9;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Poker Analysis</h1>-->
+<!--    <label for="inputText">Enter your hand:</label>-->
+<!--    <input type="text" id="inputText">-->
+<!--    <button id = "Generate" onclick="showText()">Generate Analysis</button>-->
+<!--    <div id="output">Your input will appear here.</div>-->
+
+<!--    <script>-->
+<!--        document.addEventListener('DOMContentLoaded', (event) => {-->
+<!--            const inputText = document.getElementById('inputText');-->
+<!--            const output = document.getElementById('output');-->
+
+<!--            window.showText = async function() {-->
+<!--                const userInput = inputText.value;-->
+<!--                const response = await fetch('http://127.0.0.1:5000/generate', {-->
+<!--                    method: 'POST',-->
+<!--                    headers: {-->
+<!--                        'Content-Type': 'text/plain'-->
+<!--                    },-->
+<!--                    body: userInput-->
+<!--                });-->
+<!--                if (response.ok) {-->
+<!--                    const data = await response.text();-->
+<!--                    output.textContent = data || 'No output received.';-->
+<!--                } else {-->
+<!--                    output.textContent = 'An error occurred.';-->
+<!--                }-->
+<!--            };-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Text Box</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            margin: 0;
+            background-color: green;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .body-text {
+            margin: 0;
+            padding: 0;
+        }
+        .output-container {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 20px;
+        }
+        .output-label {
+        flex: 1;
+        margin-right: 10px;
+        font-size: 20px; /* Adjust the font size here */
+        font-weight: bold; /* Optionally, make the label bold */
+        }
+        .output {
+        flex: 4;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        color: black;
+        width: 100%;
+        box-sizing: border-box;
+        }
+        img {
+            margin-top: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        .container img {
+            max-width: 10%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Poker Butler ♠️🤵🏻‍♂️</h1>
+
+        <!-- Section 1: Player's Hand -->
+        <h2>Enter your hand</h2>
+        <div class="container">
+            <img id="card1" src="back.png" alt="card1img">
+            <img id="card2" src="back.png" alt="card2img">
+        </div>
+        <label for="card1Suit">Hand Card 1:</label>
+        <select id="card1Suit" onchange="updateImages()">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="card1Value" onchange="updateImages()">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="card2">Hand Card 2:</label>
+        <select id="card2Suit" onchange="updateImages()">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="card2Value" onchange="updateImages()">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <button onclick="showTextHand()">Hand Analysis</button>
+        <br>
+
+        <!-- New Section: Board Cards -->
+        <h2>Enter the board cards (optional)</h2>
+        <div class="container">
+            <img id="boardCard1" src="back.png" alt="boardCard1img">
+            <img id="boardCard2" src="back.png" alt="boardCard2img">
+            <img id="boardCard3" src="back.png" alt="boardCard3img">
+            <img id="boardCard4" src="back.png" alt="boardCard4img">
+            <img id="boardCard5" src="back.png" alt="boardCard5img">
+        </div>
+        <label for="boardCard1Suit">Flop Card 1:</label>
+        <select id="boardCard1Suit" onchange="updateImages(2)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard1Value" onchange="updateImages(2)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="boardCard2Suit">Flop Card 2:</label>
+        <select id="boardCard2Suit" onchange="updateImages(3)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard2Value" onchange="updateImages(3)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="boardCard3Suit">Flop Card 3:</label>
+        <select id="boardCard3Suit" onchange="updateImages(4)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard3Value" onchange="updateImages(4)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="boardCard4Suit">Turn Card:</label>
+        <select id="boardCard4Suit" onchange="updateImages(5)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard4Value" onchange="updateImages(5)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <label for="boardCard5Suit">River Card:</label>
+        <select id="boardCard5Suit" onchange="updateImages(6)">
+            <option value="?">?</option>
+            <option value="spade">Spade</option>
+            <option value="heart">Heart</option>
+            <option value="diamond">Diamond</option>
+            <option value="club">Club</option>
+        </select>
+        <select id="boardCard5Value" onchange="updateImages(6)">
+            <option value="?">?</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="jack">Jack</option>
+            <option value="queen">Queen</option>
+            <option value="king">King</option>
+            <option value="ace">Ace</option>
+        </select>
+        <br>
+        <button onclick="showTextBoard()">Hand & Board Analysis</button>
+        <br>
+
+
+        <div class="output-container">
+            <div class="output-label">Recommendation</div>
+            <div id="output1" class="output">Answers will appear here.</div>
+        </div>
+
+        <div class="output-container">
+            <div class="output-label">Hand Analysis</div>
+            <div id="output2" class="output">Answers will appear here.</div>
+        </div>
+
+        <div class="output-container">
+            <div class="output-label">Possible Improvements</div>
+            <div id="output3" class="output">Answers will appear here.</div>
+        </div>
+
+        <div class="output-container">
+            <div class="output-label">Opponent Considerations</div>
+            <div id="output4" class="output">Answers will appear here.</div>
+        </div>
+
+        <!-- Section 3: General Questions -->
+        <h2>Ask a Question</h2>
+        <label for="userInput">Enter your question:</label>
+        <input type="text" id="userInput">
+        <br>
+        <button onclick="showTextGeneral()">Ask Poker Butler</button>
+
+
+        <div id="output5" class="output">Answers will appear here.</div>
+
+        <br>
+        <p class="body-text">This website was made by 2 finalists of the StanfordxBerkeley Poker Tournament - during which, one of us even got a royal flush!</p>
+        <br>
+        <br>
+    </div>
+   <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+        const card1Suit = document.getElementById('card1Suit');
+        const card1Value = document.getElementById('card1Value');
+        const card2Suit = document.getElementById('card2Suit');
+        const card2Value = document.getElementById('card2Value');
+
+        const boardCard1Suit = document.getElementById('boardCard1Suit');
+        const boardCard1Value = document.getElementById('boardCard1Value');
+        const boardCard2Suit = document.getElementById('boardCard2Suit');
+        const boardCard2Value = document.getElementById('boardCard2Value');
+        const boardCard3Suit = document.getElementById('boardCard3Suit');
+        const boardCard3Value = document.getElementById('boardCard3Value');
+        const boardCard4Suit = document.getElementById('boardCard4Suit');
+        const boardCard4Value = document.getElementById('boardCard4Value');
+        const boardCard5Suit = document.getElementById('boardCard5Suit');
+        const boardCard5Value = document.getElementById('boardCard5Value');
+
+        const inputText = document.getElementById('userInput');
+        const output1 = document.getElementById('output1');
+        const output2 = document.getElementById('output2');
+        const output3 = document.getElementById('output3');
+        const output4 = document.getElementById('output4');
+        const output5 = document.getElementById('output5');
+
+
+        let cardsArray = new Array(7).fill(null);
+
+        function updateImages(x) {
+            const card1Suit = document.getElementById('card1Suit');
+            const card1Value = document.getElementById('card1Value');
+            const card2Suit = document.getElementById('card2Suit');
+            const card2Value = document.getElementById('card2Value');
+
+            const boardCard1Suit = document.getElementById('boardCard1Suit');
+            const boardCard1Value = document.getElementById('boardCard1Value');
+            const boardCard2Suit = document.getElementById('boardCard2Suit');
+            const boardCard2Value = document.getElementById('boardCard2Value');
+            const boardCard3Suit = document.getElementById('boardCard3Suit');
+            const boardCard3Value = document.getElementById('boardCard3Value');
+            const boardCard4Suit = document.getElementById('boardCard4Suit');
+            const boardCard4Value = document.getElementById('boardCard4Value');
+            const boardCard5Suit = document.getElementById('boardCard5Suit');
+            const boardCard5Value = document.getElementById('boardCard5Value');
+
+            const boardCards = [
+                { suit: boardCard1Suit.value, value: boardCard1Value.value, imgId: 'boardCard1' },
+                { suit: boardCard2Suit.value, value: boardCard2Value.value, imgId: 'boardCard2' },
+                { suit: boardCard3Suit.value, value: boardCard3Value.value, imgId: 'boardCard3' },
+                { suit: boardCard4Suit.value, value: boardCard4Value.value, imgId: 'boardCard4' },
+                { suit: boardCard5Suit.value, value: boardCard5Value.value, imgId: 'boardCard5' }
+            ];
+
+            if (x === 0) {
+                cardsArray[x] = { suit: card1Suit.value, value: card1Value.value };
+            } else if (x === 1) {
+                cardsArray[x] = { suit: card2Suit.value, value: card2Value.value };
+            } else if (x >= 2 && x <= 6) {
+                const boardCard = boardCards[x - 2];
+                cardsArray[x] = { suit: boardCard.suit, value: boardCard.value };
+            }
+
+            for (let i = 0; i < cardsArray.length; i++) {
+                for (let j = i + 1; j < cardsArray.length; j++) {
+                    if (cardsArray[i] && cardsArray[j] && cardsArray[i].suit === cardsArray[j].suit && cardsArray[i].value === cardsArray[j].value && (cardsArray[i].value !== "?" && cardsArray[i].suit !== "?")) {
+                        cardsArray[j] = { suit: "?", value: "?" };
+                        if (j === 0) {
+                            card1Suit.value = "?";
+                            card1Value.value = "?";
+                        } else if (j === 1) {
+                            card2Suit.value = "?";
+                            card2Value.value = "?";
+                        } else {
+                            const boardCardIndex = j - 2;
+                            document.getElementById(`boardCard${boardCardIndex + 1}Suit`).value = "?";
+                            document.getElementById(`boardCard${boardCardIndex + 1}Value`).value = "?";
+                            boardCards[boardCardIndex].suit = "?";
+                            boardCards[boardCardIndex].value = "?";
+                            document.getElementById(boardCards[boardCardIndex].imgId).src = "./cardspng/back.png";
+                        }
+                    }
+                }
+            }
+
+            // Update images for player cards
+            document.getElementById('card1').src = (card1Suit.value === "?" || card1Value.value === "?") ? "back.png" : `${card1Value.value}_of_${card1Suit.value}s.png`;
+            document.getElementById('card2').src = (card2Suit.value === "?" || card2Value.value === "?") ? "back.png" : `${card2Value.value}_of_${card2Suit.value}s.png`;
+
+            // Update images for board cards
+            boardCards.forEach(card => {
+                const cardImg = document.getElementById(card.imgId);
+                cardImg.src = (card.suit === "?" || card.value === "?") ? "back.png" : `${card.value}_of_${card.suit}s.png`;
+            });
+        }
+
+        card1Suit.addEventListener('change', () => updateImages(0));
+        card1Value.addEventListener('change', () => updateImages(0));
+        card2Suit.addEventListener('change', () => updateImages(1));
+        card2Value.addEventListener('change', () => updateImages(1));
+
+        boardCard1Suit.addEventListener('change', () => updateImages(2));
+        boardCard1Value.addEventListener('change', () => updateImages(2));
+        boardCard2Suit.addEventListener('change', () => updateImages(3));
+        boardCard2Value.addEventListener('change', () => updateImages(3));
+        boardCard3Suit.addEventListener('change', () => updateImages(4));
+        boardCard3Value.addEventListener('change', () => updateImages(4));
+        boardCard4Suit.addEventListener('change', () => updateImages(5));
+        boardCard4Value.addEventListener('change', () => updateImages(5));
+        boardCard5Suit.addEventListener('change', () => updateImages(6));
+        boardCard5Value.addEventListener('change', () => updateImages(6));
+
+
+        // Function to handle poker hand analysis
+        window.showTextHand = async function() {
+
+            function sectionsplitter (text) { // I MADE TWO OF THESE FUNCTIONS!!! one is in the next async function
+
+                const sections = [];
+                let startIndex = 0;
+
+                for (let i = 1; i <= 4; i++) {
+                    const searchString = `${i}. `;
+                    const index = text.indexOf(searchString, startIndex);
+
+                    if (index !== -1) {
+                        const nextIndex = text.indexOf(`${i + 1}. `, index + 1);
+                        if (nextIndex !== -1) {
+                            sections.push(text.slice(index, nextIndex).trim());
+                            startIndex = nextIndex;
+                        } else {
+                            sections.push(text.slice(index).trim());
+                            break;
+                        }
+                    }
+                }
+
+
+                if (sections.length === 4) {
+                    document.getElementById("output1").textContent = sections[0].substring(2);
+                    document.getElementById("output2").textContent = sections[1].substring(2);
+                    document.getElementById("output3").textContent = sections[2].substring(2);
+                    document.getElementById("output4").textContent = sections[3].substring(2);
+                } else {
+                    // Handle case where the response doesn't have exactly 4 sections
+                    document.getElementById("output1").textContent = "Unexpected response format.";
+                }
+
+
+            }
+
+            const card1 = `${card1Value.value} of ${card1Suit.value}s`;
+            const card2 = `${card2Value.value} of ${card2Suit.value}s`;
+
+            const userInput = `Card 1: ${card1}, Card 2: ${card2}`;
+            const response = await fetch('http://127.0.0.1:5000/generatehandanalysis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userInput
+            });
+            if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
+                output1.textContent = "Please provide both cards in your hand.";
+            } else if (response.ok) {
+                const data = await response.text();
+
+                //output1.textContent = data || 'hello.';
+
+                sectionsplitter(data)
+
+            } else {
+                output1.textContent = 'An error occurred.';
+            }
+        };
+
+        // Function to handle board card analysis
+        window.showTextBoard = async function() {
+
+            function sectionsplitter (text) { // I MADE TWO OF THESE FUNCTIONS!!! one is in the next async function
+
+                const sections = [];
+                let startIndex = 0;
+
+                for (let i = 1; i <= 4; i++) {
+                    const searchString = `${i}. `;
+                    const index = text.indexOf(searchString, startIndex);
+
+                    if (index !== -1) {
+                        const nextIndex = text.indexOf(`${i + 1}. `, index + 1);
+                        if (nextIndex !== -1) {
+                            sections.push(text.slice(index, nextIndex).trim());
+                            startIndex = nextIndex;
+                        } else {
+                            sections.push(text.slice(index).trim());
+                            break;
+                        }
+                    }
+                }
+
+
+                if (sections.length === 4) {
+                    document.getElementById("output1").textContent = sections[0].substring(2);
+                    document.getElementById("output2").textContent = sections[1].substring(2);
+                    document.getElementById("output3").textContent = sections[2].substring(2);
+                    document.getElementById("output4").textContent = sections[3].substring(2);
+                } else {
+                    // Handle case where the response doesn't have exactly 4 sections
+                    document.getElementById("output1").textContent = "Unexpected response format.";
+                }
+            }
+
+            const boardCards = [
+                `${boardCard1Value.value} of ${boardCard1Suit.value}s`,
+                `${boardCard2Value.value} of ${boardCard2Suit.value}s`,
+                `${boardCard3Value.value} of ${boardCard3Suit.value}s`,
+                `${boardCard4Value.value} of ${boardCard4Suit.value}s`,
+                `${boardCard5Value.value} of ${boardCard5Suit.value}s`
+            ].join(', ');
+
+            const flopCards = [
+                `${boardCard1Value.value} of ${boardCard1Suit.value}s`,
+                `${boardCard2Value.value} of ${boardCard2Suit.value}s`,
+                `${boardCard3Value.value} of ${boardCard3Suit.value}s`
+            ].join(', ');
+
+            const turnCard = `${boardCard4Value.value} of ${boardCard4Suit.value}s`;
+            const riverCard = `${boardCard5Value.value} of ${boardCard5Suit.value}s`;
+
+
+            const card1 = `${card1Value.value} of ${card1Suit.value}s`;
+            const card2 = `${card2Value.value} of ${card2Suit.value}s`;
+
+            const userInput = `My cards are Card 1: ${card1}, Card 2: ${card2}. Flop cards are ${flopCards}. Turn card is ${turnCard}. River card is ${riverCard}.`;
+            if (card1Suit.value === "?" || card2Suit.value === "?" || card1Value.value === "?" || card2Value.value === "?") {
+                output1.textContent = "Please provide both cards in your hand.";
+            } else if (flopCards.includes("?")) {
+                output1.textContent = "Please provide all cards on the flop";
+            } else if (boardCard4Value.value === "?" && boardCard4Suit.value === "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
+                const responseFlop = await fetch('http://127.0.0.1:5000/generatebflop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userInput
+                });
+
+                if (responseFlop.ok) {
+
+                    const data = await responseFlop.text();
+                    output1.textContent = data
+                    sectionsplitter(data)
+
+                } else {
+                    output1.textContent = "smth wrong with GPT, output1 not ok"
+                }
+
+            } else if (boardCard4Value.value != "?" && boardCard4Suit.value != "?" && boardCard5Value.value === "?" && boardCard5Suit.value === "?") {
+                const responseTurn = await fetch('http://127.0.0.1:5000/generatebturn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userInput
+                });
+
+                if (responseTurn.ok) {
+                    const data = await responseTurn.text();
+                    sectionsplitter(data)
+                } else {
+                    output1.textContent = "smth wrong with GPT, output1 not ok"
+                }
+
+            } else if (boardCard4Value.value === "?" || boardCard4Suit.value === "?") {
+                output1.textContent = "Please provide all cards on the turn or replace them with '?' ";
+            } else if (boardCard5Value.value === "?" || boardCard5Suit.value === "?") {
+                output1.textContent = "Please provide all cards on the river or replace them with '?' ";
+            } else if (!boardCards.includes("?")) {
+
+                const responseRiver = await fetch('http://127.0.0.1:5000/generatebriver', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userInput
+                });
+
+                if (responseRiver.ok) {
+                    const data = await responseRiver.text();
+                    sectionsplitter(data)
+                } else {
+                    output1.textContent = "smth wrong with GPT, output1 not ok"
+                }
+
+            } else {
+                output1.textContent = "If statements not inclusive, try again"
+            }
+        };
+
+        // Function to handle general questions
+        window.showTextGeneral = async function() {
+            const userInput = inputText.value; // Retrieve the value from the text input element
+            const response = await fetch('http://127.0.0.1:5000/generategeneralquestion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: userInput
+            });
+            const data = await response.text();
+            output5.textContent = data || 'hello.';
+        };
+
+        inputText.addEventListener('keypress', async function(event) {
+            if (event.key === 'Enter') {
+                const userInput = inputText.value; // Retrieve the value from the text input element
+                const response = await fetch('http://127.0.0.1:5000/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: userInput
+                });
+                const data = await response.text();
+                output1.textContent = data || 'hello.';
+            }
+        });
+    });
+   </script>
+</body>
+</html>
