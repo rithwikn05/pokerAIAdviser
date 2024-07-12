@@ -70,6 +70,7 @@
         .container {
             text-align: center;
             margin-top: 20px;
+            width: 90%;
         }
         .body-text {
             margin: 0;
@@ -113,8 +114,8 @@
         <!-- Section 1: Player's Hand -->
         <h2>Enter your hand</h2>
         <div class="container">
-            <img id="card1" src="back.png" alt="card1img">
-            <img id="card2" src="back.png" alt="card2img">
+            <img id="card1" src="static/back.png" alt="card1img">
+            <img id="card2" src="static/back.png" alt="card2img">
         </div>
         <label for="card1Suit">Hand Card 1:</label>
         <select id="card1Suit" onchange="updateImages()">
@@ -172,11 +173,11 @@
         <!-- New Section: Board Cards -->
         <h2>Enter the board cards (optional)</h2>
         <div class="container">
-            <img id="boardCard1" src="back.png" alt="boardCard1img">
-            <img id="boardCard2" src="back.png" alt="boardCard2img">
-            <img id="boardCard3" src="back.png" alt="boardCard3img">
-            <img id="boardCard4" src="back.png" alt="boardCard4img">
-            <img id="boardCard5" src="back.png" alt="boardCard5img">
+            <img id="boardCard1" src="static/cardspng/back.png" alt="boardCard1img">
+            <img id="boardCard2" src="static/cardspng/back.png" alt="boardCard2img">
+            <img id="boardCard3" src="static/cardspng/back.png" alt="boardCard3img">
+            <img id="boardCard4" src="static/cardspng/back.png" alt="boardCard4img">
+            <img id="boardCard5" src="static/cardspng/back.png" alt="boardCard5img">
         </div>
         <label for="boardCard1Suit">Flop Card 1:</label>
         <select id="boardCard1Suit" onchange="updateImages(2)">
@@ -420,20 +421,20 @@
                             document.getElementById(`boardCard${boardCardIndex + 1}Value`).value = "?";
                             boardCards[boardCardIndex].suit = "?";
                             boardCards[boardCardIndex].value = "?";
-                            document.getElementById(boardCards[boardCardIndex].imgId).src = "./cardspng/back.png";
+                            document.getElementById(boardCards[boardCardIndex].imgId).src = "static/cardspng/back.png";
                         }
                     }
                 }
             }
 
             // Update images for player cards
-            document.getElementById('card1').src = (card1Suit.value === "?" || card1Value.value === "?") ? "back.png" : `${card1Value.value}_of_${card1Suit.value}s.png`;
-            document.getElementById('card2').src = (card2Suit.value === "?" || card2Value.value === "?") ? "back.png" : `${card2Value.value}_of_${card2Suit.value}s.png`;
+            document.getElementById('card1').src = (card1Suit.value === "?" || card1Value.value === "?") ? "static/cardspng/back.png" : `static/cardspng/${card1Value.value}_of_${card1Suit.value}s.png`;
+            document.getElementById('card2').src = (card2Suit.value === "?" || card2Value.value === "?") ? "static/cardspng/back.png" : `static/cardspng/${card2Value.value}_of_${card2Suit.value}s.png`;
 
             // Update images for board cards
             boardCards.forEach(card => {
                 const cardImg = document.getElementById(card.imgId);
-                cardImg.src = (card.suit === "?" || card.value === "?") ? "back.png" : `${card.value}_of_${card.suit}s.png`;
+                cardImg.src = (card.suit === "?" || card.value === "?") ? "static/cardspng/back.png" : `static/cardspng/${card.value}_of_${card.suit}s.png`;
             });
         }
 
